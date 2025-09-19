@@ -21,23 +21,23 @@ abstract class Unit implements Contract
         return $this->value;
     }
 
-    public static function from(Contract | string $argument): string
+    public static function from(Contract | string $argument, ?int $precision = 2): string
     {
         return $argument instanceof Contract
-            ? self::fromContract($argument)
-            : self::fromExpression($argument);
+            ? self::fromContract($argument, $precision)
+            : self::fromExpression($argument, $precision);
     }
 
-    private static function fromContract(Contract $unit, bool $verified = false): string
+    private static function fromContract(Contract $unit,  ?int $precision = 2, bool $verified = false): string
     {
-        if (! $verified) {
+        if (!$verified) {
             self::checkCompatibility($unit);
         }
 
-        return Conversion::handle($unit, static::class);
+        return Conversion::handle($unit, static::class, $precision);
     }
 
-    private static function fromExpression(string $expression): string
+    private static function fromExpression(string $expression,  ?int $precision = 2): string
     {
         Expression::validate($expression);
 
@@ -46,7 +46,7 @@ abstract class Unit implements Contract
         $namespace = (new ReflectionClass(static::class))->getNamespaceName();
         $suffix = Str::of($namespace)->explode('\\')->slice(-2)->implode('/');
 
-        $unit = Collection::wrap(File::files(__DIR__."/../{$suffix}"))
+        $unit = Collection::wrap(File::files(__DIR__ . "/../{$suffix}"))
             ->map(fn ($file) => File::name($file))
             ->map(fn ($unit) => "{$namespace}\\{$unit}")
             ->first(fn ($unit) => $unit::symbol() === $symbol);
@@ -55,7 +55,7 @@ abstract class Unit implements Contract
             throw UnitException::invalid($symbol);
         }
 
-        return self::fromContract(new $unit($value), true);
+        return self::fromContract(new $unit($value), $precision, true);
     }
 
     private static function checkCompatibility(Contract $unit): void
