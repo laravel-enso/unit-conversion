@@ -8,10 +8,11 @@ use LaravelEnso\UnitConversion\Length\Units\Meter;
 use LaravelEnso\UnitConversion\Length\Units\Millimeter;
 use LaravelEnso\UnitConversion\Mass\Units\Gram;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class UnitTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function can_convert_from_unit()
     {
         $result = Millimeter::from(new Meter(2));
@@ -19,7 +20,7 @@ class UnitTest extends TestCase
         $this->assertTrue(Decimals::eq('2000', $result));
     }
 
-    /** @test */
+    #[Test]
     public function can_convert_from_expression()
     {
         $result = Millimeter::from('2 m');
@@ -27,7 +28,7 @@ class UnitTest extends TestCase
         $this->assertTrue(Decimals::eq('2000', $result));
     }
 
-    /** @test */
+    #[Test]
     public function cant_convert_from_incompatible_unit()
     {
         $unit = new Meter(2);
@@ -40,7 +41,7 @@ class UnitTest extends TestCase
         Gram::from($unit);
     }
 
-    /** @test */
+    #[Test]
     public function cant_convert_from_invalid_expression()
     {
         $expression = '100 kg 5';
@@ -52,7 +53,7 @@ class UnitTest extends TestCase
         Gram::from($expression);
     }
 
-    /** @test */
+    #[Test]
     public function cant_convert_from_invalid_symbol()
     {
         $message = Unit::invalid('kx')->getMessage();
