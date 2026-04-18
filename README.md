@@ -1,25 +1,147 @@
 # Unit Conversion
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/a7b6163dff4943c68f3df62ff473f208)](https://www.codacy.com/gh/laravel-enso/unit-conversion?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=laravel-enso/unit-conversion&amp;utm_campaign=Badge_Grade) 
-[![StyleCI](https://github.styleci.io/repos/85466970/shield?branch=master)](https://github.styleci.io/repos/85466970)
-[![License](https://poser.pugx.org/laravel-enso/unit-conversion/license)](https://packagist.org/packages/laravel-enso/unit-conversion)
-[![Total Downloads](https://poser.pugx.org/laravel-enso/unit-conversion/downloads)](https://packagist.org/packages/laravel-enso/unit-conversion)
-[![Latest Stable Version](https://poser.pugx.org/laravel-enso/unit-conversion/version)](https://packagist.org/packages/laravel-enso/unit-conversion)
+[![License](https://poser.pugx.org/laravel-enso/unit-conversion/license)](LICENSE)
+[![Stable](https://poser.pugx.org/laravel-enso/unit-conversion/version)](https://packagist.org/packages/laravel-enso/unit-conversion)
+[![Downloads](https://poser.pugx.org/laravel-enso/unit-conversion/downloads)](https://packagist.org/packages/laravel-enso/unit-conversion)
+[![PHP](https://img.shields.io/badge/php-8.0%2B-777bb4.svg)](composer.json)
+[![Issues](https://img.shields.io/github/issues/laravel-enso/unit-conversion.svg)](https://github.com/laravel-enso/unit-conversion/issues)
 
-Unit converter utility classes for [Laravel Enso](https://github.com/laravel-enso/Enso).
+## Description
 
-This package can not work independently of the [Enso](https://github.com/laravel-enso/Enso) ecosystem.
+Unit Conversion provides small, focused services for converting values between related measurement units.
 
-For live examples and demos, you may visit [laravel-enso.com](https://www.laravel-enso.com)
+The package organizes conversions by measurement family and supports both object-based and expression-based inputs. It is designed for deterministic numeric conversions such as length, mass, energy, and electrical power.
 
-### Installation, Configuration & Usage
+Internally, each unit declares a label, a symbol, and a conversion factor, while the conversion services discover compatible units automatically from the package structure.
 
-Be sure to check out the full documentation for this package available at [docs.laravel-enso.com](https://docs.laravel-enso.com/backend/unit-conversion.html)
+## Installation
 
-### Contributions
+Install the package:
+
+```bash
+composer require laravel-enso/unit-conversion
+```
+
+No publishing or runtime configuration is required.
+
+## Features
+
+- Supports conversion by measurement family through dedicated converter services.
+- Supports direct conversion from unit objects.
+- Supports conversion from string expressions such as `2 m` or `15 kg`.
+- Includes built-in families for length, mass, energy, and power.
+- Uses decimal arithmetic helpers for precise multiplication and division.
+- Rejects incompatible conversions between different families.
+- Validates input expressions and unit symbols before converting.
+
+## Usage
+
+Convert through a converter service:
+
+```php
+use LaravelEnso\UnitConversion\Length\Length;
+use LaravelEnso\UnitConversion\Length\Units\Meter;
+use LaravelEnso\UnitConversion\Length\Units\Millimeter;
+
+$result = Length::from(new Meter(2))->to(Millimeter::class);
+```
+
+Convert from a string expression:
+
+```php
+$result = Length::from('2 m')->to(Millimeter::class);
+```
+
+Convert directly to a unit class:
+
+```php
+use LaravelEnso\UnitConversion\Mass\Units\Gram;
+use LaravelEnso\UnitConversion\Mass\Units\Kilogram;
+
+$result = Gram::from(new Kilogram(3));
+```
+
+You can also convert directly from an expression:
+
+```php
+$result = Gram::from('3 kg');
+```
+
+::: warning Note
+Expression-based conversions must follow the `<value> <symbol>` format, for example `2 m`, `3 kg`, or `1.5 kcal`.
+
+If the expression is malformed, the symbol is unknown, or the source and destination units belong to different families, the package throws a dedicated exception.
+:::
+
+## API
+
+### Converter Services
+
+Available families:
+
+- `LaravelEnso\UnitConversion\Length\Length`
+- `LaravelEnso\UnitConversion\Mass\Mass`
+- `LaravelEnso\UnitConversion\Energy\Energy`
+- `LaravelEnso\UnitConversion\Electricity\Power`
+
+Common entry points:
+
+- `from(Unit|string $from): static`
+- `to(string $class): string`
+
+### Units
+
+Every unit class implements:
+
+- `label(): string`
+- `symbol(): string`
+- `factor(): float`
+- `value(): string`
+- `from(Unit|string $argument, ?int $precision = 2): string`
+
+Built-in units:
+
+- Length: `Millimeter`, `Centimeter`, `Meter`, `Kilometer`
+- Mass: `Gram`, `Kilogram`
+- Energy: `Calorie`, `Kilocalorie`, `Joule`
+- Power: `Watt`, `KiloWatt`
+
+### Expression Validation
+
+`LaravelEnso\UnitConversion\Services\Expression`
+
+Expected format:
+
+```text
+<value> <symbol>
+```
+
+Examples:
+
+- `2 m`
+- `100 kg`
+- `1.5 kcal`
+
+### Exceptions
+
+The package exposes:
+
+- `LaravelEnso\UnitConversion\Exceptions\Unit`
+- `LaravelEnso\UnitConversion\Exceptions\Conversion`
+- `LaravelEnso\UnitConversion\Exceptions\Expression`
+
+## Depends On
+
+Required Enso packages:
+
+- [`laravel-enso/helpers`](https://docs.laravel-enso.com/backend/helpers.html) [↗](https://github.com/laravel-enso/helpers)
+
+Framework dependency:
+
+- [`laravel/framework`](https://github.com/laravel/framework) [↗](https://github.com/laravel/framework)
+
+## Contributions
 
 are welcome. Pull requests are great, but issues are good too.
 
-### License
-
-This package is released under the MIT license.
+Thank you to all the people who already contributed to Enso!
