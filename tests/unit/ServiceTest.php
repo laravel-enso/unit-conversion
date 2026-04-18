@@ -10,7 +10,7 @@ use LaravelEnso\UnitConversion\Mass\Units\Gram;
 use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
-class ServiceTest extends TestCase
+class UnitConversionServiceTest extends TestCase
 {
     #[Test]
     public function can_convert_from_unit()
