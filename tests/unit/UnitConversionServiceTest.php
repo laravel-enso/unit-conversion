@@ -1,25 +1,24 @@
 <?php
 
 use LaravelEnso\Helpers\Services\Decimals;
-use LaravelEnso\UnitConversion\Exceptions\Expression;
-use LaravelEnso\UnitConversion\Exceptions\Unit;
 use LaravelEnso\UnitConversion\Electricity\Power;
 use LaravelEnso\UnitConversion\Electricity\Units\KiloWatt;
 use LaravelEnso\UnitConversion\Electricity\Units\Watt;
 use LaravelEnso\UnitConversion\Energy\Energy;
 use LaravelEnso\UnitConversion\Energy\Units\Joule;
 use LaravelEnso\UnitConversion\Energy\Units\Kilocalorie;
+use LaravelEnso\UnitConversion\Exceptions\Expression;
+use LaravelEnso\UnitConversion\Exceptions\Unit;
 use LaravelEnso\UnitConversion\Length\Length;
 use LaravelEnso\UnitConversion\Length\Units\Kilometer;
 use LaravelEnso\UnitConversion\Length\Units\Meter;
 use LaravelEnso\UnitConversion\Length\Units\Millimeter;
 use LaravelEnso\UnitConversion\Mass\Mass;
 use LaravelEnso\UnitConversion\Mass\Units\Gram;
-use LaravelEnso\UnitConversion\Mass\Units\Kilogram;
 use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
-class ServiceTest extends TestCase
+class UnitConversionServiceTest extends TestCase
 {
     #[Test]
     public function can_convert_from_unit()
