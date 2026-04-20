@@ -1,6 +1,6 @@
 {
     "name": "laravel-enso/unit-conversion",
-    "description": "Unit conversion for Laravel Enso",
+    "description": "Unit conversion services for Laravel Enso",
     "keywords": [
         "laravel-enso",
         "unit-conversion"

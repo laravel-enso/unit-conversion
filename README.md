@@ -3,7 +3,7 @@
 [![License](https://poser.pugx.org/laravel-enso/unit-conversion/license)](LICENSE)
 [![Stable](https://poser.pugx.org/laravel-enso/unit-conversion/version)](https://packagist.org/packages/laravel-enso/unit-conversion)
 [![Downloads](https://poser.pugx.org/laravel-enso/unit-conversion/downloads)](https://packagist.org/packages/laravel-enso/unit-conversion)
-[![PHP](https://img.shields.io/badge/php-8.0%2B-777bb4.svg)](composer.json)
+[![PHP](https://img.shields.io/badge/php-8.3%2B-777bb4.svg)](composer.json)
 [![Issues](https://img.shields.io/github/issues/laravel-enso/unit-conversion.svg)](https://github.com/laravel-enso/unit-conversion/issues)
 [![Merge Requests](https://img.shields.io/github/issues-pr/laravel-enso/unit-conversion.svg)](https://github.com/laravel-enso/unit-conversion/pulls)
 
@@ -136,10 +136,6 @@ The package exposes:
 Required Enso packages:
 
 - [`laravel-enso/helpers`](https://docs.laravel-enso.com/backend/helpers.html) [↗](https://github.com/laravel-enso/helpers)
-
-Framework dependency:
-
-- [`laravel/framework`](https://github.com/laravel/framework) [↗](https://github.com/laravel/framework)
 
 ## Contributions
 
