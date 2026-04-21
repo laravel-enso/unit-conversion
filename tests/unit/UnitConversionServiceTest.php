@@ -129,4 +129,23 @@ class UnitConversionServiceTest extends TestCase
             }
         }
     }
+
+    #[Test]
+    public function accepts_signed_decimal_expressions()
+    {
+        $result = Mass::from('-1.5 kg')->to(Gram::class);
+
+        $this->assertTrue(Decimals::eq('-1500', $result));
+    }
+
+    #[Test]
+    public function rejects_invalid_destination_unit_classes()
+    {
+        $message = Unit::invalid(Gram::class)->getMessage();
+
+        $this->expectException(Unit::class);
+        $this->expectExceptionMessage($message);
+
+        Length::from('2 m')->to(Gram::class);
+    }
 }

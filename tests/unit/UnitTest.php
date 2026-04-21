@@ -107,4 +107,12 @@ class UnitTest extends TestCase
         $this->assertSame('kW', KiloWatt::symbol());
         $this->assertSame(1000.0, KiloWatt::factor());
     }
+
+    #[Test]
+    public function can_convert_signed_expression_directly_to_a_unit()
+    {
+        $result = Kilometer::from('-1500 m', 3);
+
+        $this->assertSame('-1.500', $result);
+    }
 }
